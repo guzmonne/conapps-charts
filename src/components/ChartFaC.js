@@ -12,7 +12,7 @@ const d3 = Object.assign({},
  * @component Chart
  * @description Main chart component
  */
-class Chart extends React.Component {
+class ChartFaC extends React.Component {
   componentDidMount() {
     d3.select(window)
       .on("resize." + this.container.attr('id'), this.forceUpdate.bind(this))
@@ -138,6 +138,9 @@ class Chart extends React.Component {
       stroke,
       fill,
       data,
+      xGrid,
+      yGrid,
+      children,
     } = this.props
     
     const {
@@ -161,20 +164,19 @@ class Chart extends React.Component {
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             <g className="xAxis" ref={c => (this.xAxis = c)}/>
             <g className="yAxis" ref={c => (this.yAxis = c)}/>
-            <g className="xGrid" ref={c => (this.xGrid = c)}/>
-            <g className="yGrid" ref={c => (this.yGrid = c)}/>
-            <g className="Rects">
-            {data.map((d, i) => (
-              <rect x={xScale(d[0])}
-                    y={yScale(d[1])}
-                    fill={fill}
-                    stroke={stroke}
-                    key={i}
-                    width={xScale.bandwidth()}
-                    height={h - yScale(d[1])}
-              />
-            ))}
-            </g>
+          {xGrid &&  
+            <g className="xGrid" ref={c => (this.xGrid = c)}/>}
+          {yGrid &&
+            <g className="yGrid" ref={c => (this.yGrid = c)}/>}
+            {children({
+              data,
+              xScale,
+              yScale,
+              fill,
+              stroke,
+              w,
+              h,
+            })}
           </g>
         </svg>
       </div>
@@ -182,7 +184,8 @@ class Chart extends React.Component {
   }
 }
 
-Chart.propTypes = {
+ChartFaC.propTypes = {
+  children: T.func.isRequired,
   data: T.array.isRequired,
   margin: T.shape({
     top: T.number,
@@ -198,9 +201,11 @@ Chart.propTypes = {
   xAxis: T.string,
   xTicks: T.number,
   yTicks: T.number,
+  xGrid: T.bool,
+  yGrid: T.bool,
 }
 
-Chart.defaultProps = {
+ChartFaC.defaultProps = {
   margin: {top: 30, right: 15, bottom: 80, left: 30},
   fill: '#5B5F97',
   stroke: '#0C105E',
@@ -208,6 +213,8 @@ Chart.defaultProps = {
   yAxis: 'linear',
   xTicks: 5,
   yTicks: 5,
+  xGrid: true,
+  yGrid: true,
 }
 
-export default Chart
+export default ChartFaC
