@@ -28,8 +28,21 @@ class ChartFaC extends React.Component {
     d3.select(window)
       .on(id, null)
   }
+
+  componentWillReceiveProps(props) {
+    if (
+      props.xTicks !== this.props.xTicks ||
+      props.yTicks !== this.props.yTicks      
+    ) {
+      this.d3Update()
+    }
+  }
   
   componentDidUpdate() {
+    this.d3Update()
+  }
+
+  d3Update = () => {
     const {xTicks, yTicks} = this.props
     const {xScale, yScale} = this.getScales()
     const {xAxis, yAxis, xGrid, yGrid} = this
