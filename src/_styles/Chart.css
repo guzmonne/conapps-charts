@@ -1,8 +1,11 @@
+.ChartContainer {
+  position: relative;
+}
+
 g.xAxis g.tick text {
   text-anchor: end;
   transform: rotate(-45deg) translate(-1em);
 }
-
 
 g.Rects rect {
 /*fill: #5B5F97;*/

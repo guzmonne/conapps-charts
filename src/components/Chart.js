@@ -14,12 +14,16 @@ const d3 = Object.assign({},
  */
 class Chart extends React.Component {
   componentDidMount() {
+    const id = "resize." + this.container.attr('id')
     d3.select(window)
-      .on("resize." + this.container.attr('id'), this.forceUpdate.bind(this))
+      .on(id, this.forceUpdate.bind(this))
+    console.log(this.svg)
   }
   
   componentWillUnmount() {
-    d3.select(window).on("resize." + this.container.attr('id'), null)
+    const id = "resize." + this.container.attr('id')
+    d3.select(window)
+      .on(id, null)
   }
   
   componentDidUpdate() {
@@ -157,7 +161,8 @@ class Chart extends React.Component {
         <svg width={this.targetWidth() || width || 0} 
              height={this.aspectHeight(aspect) || height || 0}
              viewBox={`0 0 ${width || 0} ${height || 0}`}
-             preserveAspectRatio="xMinYMid">
+             preserveAspectRatio="xMinYMid"
+             ref={c => (this.svg = c)}>
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             <g className="xAxis" ref={c => (this.xAxis = c)}/>
             <g className="yAxis" ref={c => (this.yAxis = c)}/>

@@ -13,13 +13,20 @@ const d3 = Object.assign({},
  * @description Main chart component
  */
 class ChartFaC extends React.Component {
+  componentWillMount() {
+    this.id = uniqueId('Chart')
+  }
+
   componentDidMount() {
+    const id = "resize." + this.container.attr('id')
     d3.select(window)
-      .on("resize." + this.container.attr('id'), this.forceUpdate.bind(this))
+      .on(id, this.forceUpdate.bind(this))
   }
   
   componentWillUnmount() {
-    d3.select(window).on("resize." + this.container.attr('id'), null)
+    const id = "resize." + this.container.attr('id')
+    d3.select(window)
+      .on(id, null)
   }
   
   componentDidUpdate() {
@@ -129,6 +136,11 @@ class ChartFaC extends React.Component {
   aspectHeight = (aspect) => {
     return Math.round(this.targetWidth() / aspect)
   }
+
+  mouseCoordinates = (e) => {
+    const {nativeEvent: {offsetX, offsetY}} = e
+    return [offsetX, offsetY]
+  }
   
   render() {
     const {
@@ -147,6 +159,10 @@ class ChartFaC extends React.Component {
       xScale,
       yScale
     } = this.getScales()
+
+    const {
+      mouseCoordinates
+    } = this
     
     const w = this.innerWidth()
     const h = this.innerHeight()
@@ -155,11 +171,12 @@ class ChartFaC extends React.Component {
     
     return (
       <div className="ChartContainer"
-           id={uniqueId('Chart')}
+           id={this.id}
            ref={c => (this.container = d3.select(c))}>
         <svg width={this.targetWidth() || width || 0} 
              height={this.aspectHeight(aspect) || height || 0}
              viewBox={`0 0 ${width || 0} ${height || 0}`}
+             ref={c => (this.svg = c)}
              preserveAspectRatio="xMinYMid">
           <g transform={`translate(${margin.left}, ${margin.top})`}>
             <g className="xAxis" ref={c => (this.xAxis = c)}/>
@@ -176,6 +193,7 @@ class ChartFaC extends React.Component {
               stroke,
               w,
               h,
+              mouseCoordinates,
             })}
           </g>
         </svg>
