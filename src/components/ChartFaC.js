@@ -152,6 +152,8 @@ class ChartFaC extends React.Component {
       data,
       xGrid,
       yGrid,
+      className,
+      tooltip,
       children,
     } = this.props
     
@@ -167,12 +169,13 @@ class ChartFaC extends React.Component {
     const w = this.innerWidth()
     const h = this.innerHeight()
     
-    const aspect = width/height
+    const aspect = width / height
     
     return (
-      <div className="ChartContainer"
+      <div className={className}
            id={this.id}
            ref={c => (this.container = d3.select(c))}>
+        {tooltip ? tooltip : <none/>}
         <svg width={this.targetWidth() || width || 0} 
              height={this.aspectHeight(aspect) || height || 0}
              viewBox={`0 0 ${width || 0} ${height || 0}`}
@@ -221,6 +224,8 @@ ChartFaC.propTypes = {
   yTicks: T.number,
   xGrid: T.bool,
   yGrid: T.bool,
+  tooltip: T.element,
+  className: T.string,
 }
 
 ChartFaC.defaultProps = {
@@ -233,6 +238,7 @@ ChartFaC.defaultProps = {
   yTicks: 5,
   xGrid: true,
   yGrid: true,
+  className: 'ChartContainer',
 }
 
 export default ChartFaC

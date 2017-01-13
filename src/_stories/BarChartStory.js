@@ -122,6 +122,7 @@ class BarChartStory extends React.Component {
                   fill={color('Fill', fill)}
                   xGrid={boolean('X Grid', true)}
                   yGrid={boolean('Y Grid', true)}
+                  tooltips={boolean('Tooltips', true)}
                   {...rest}
         />
       </div>
