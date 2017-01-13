@@ -32,20 +32,10 @@ class BarChartStory extends React.Component {
     this.randomPoints = this.randomPoints.bind(this)
     //--
     this.state = {
-      margin: {top: 30, right: 15, bottom: 80, left: 30},
-      maxRadius: 50,
       width: 600,
       height: 400,
-      ticks: 10,
       xTicks: 10,
       yTicks: 10,
-      xAxis: 'band',
-      yAxis: 'linear',
-      stroke: GREY,
-      fill: BLUE,
-      maxColor: RED,
-      medColor: YELLOW,
-      minColor: GREEN,
       data: [],
     }
   }

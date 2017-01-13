@@ -12,6 +12,7 @@ const BarChart = (props) => {
       <TooltipFaC>
       {({tooltipShow, tooltipHide, tooltipState}) => (
         <ChartFaC className="BarChart__container" 
+                  xAxis="band"
                   tooltip={tooltips ? <Tooltip {...tooltipState} /> : <none />}
                   {...props}>
           {({xScale, yScale, w, h}) => (
@@ -47,6 +48,7 @@ BarChart.propTypes = {
 
 BarChart.defaultProps = {
   tooltips: true,
+  fill: '#5B5F97',
 }
 
 export default BarChart
