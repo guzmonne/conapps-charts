@@ -1,0 +1,28 @@
+g.xAxis g.tick text {
+  text-anchor: end;
+  transform: rotate(-45deg) translate(-1em);
+}
+
+
+g.Rects rect {
+/*fill: #5B5F97;*/
+  opacity: 0.6;
+}
+
+g.Rects rect:hover {
+  opacity: 0.8;
+  stroke: whitesmoke;
+  stroke-width: 0.5px;
+}
+
+g.xGrid line,
+g.yGrid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.7;
+  stroke-width: 0.5px;  
+}
+
+g.xGrid path,
+g.yGrid path {
+  stroke-width: 0;
+}
