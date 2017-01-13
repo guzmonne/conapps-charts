@@ -17,7 +17,7 @@ BarChartTooltip.propTypes = {
   active: T.bool,
   top: T.number,
   left: T.number,
-  data: T.arrayOf(T.array),
+  data: T.array,
   className: T.string,
 }
 
