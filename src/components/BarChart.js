@@ -18,13 +18,13 @@ const BarChart = (props) => {
             <g className="Rects">
             {data.map((d, i) => (
               <g className="BarChart__bar"
+                key={`rect[${i}]`}
                 onMouseLeave={tooltipHide}
                 onMouseMove={tooltipShow(d)}>
                 <rect x={xScale(d[0])}
                       y={yScale(d[1])}
                       fill={fill}
                       stroke={stroke}
-                      key={`rect[${i}]`}
                       width={xScale.bandwidth()}
                       height={h - yScale(d[1])}
                 />
