@@ -189,6 +189,8 @@ class ChartFaC extends React.Component {
       stroke,
       fill,
       data,
+      showXAxis,
+      showYAxis,
       xGrid,
       yGrid,
       className,
@@ -201,10 +203,6 @@ class ChartFaC extends React.Component {
       yScale
     } = this.getScales()
 
-    const {
-      mouseCoordinates
-    } = this
-    
     const w = this.innerWidth()
     const h = this.innerHeight()
     
@@ -221,8 +219,10 @@ class ChartFaC extends React.Component {
              ref={c => (this.svg = c)}
              preserveAspectRatio="xMinYMid">
           <g transform={`translate(${margin.left}, ${margin.top})`}>
-            <g className="xAxis" ref={c => (this.xAxis = c)}/>
-            <g className="yAxis" ref={c => (this.yAxis = c)}/>
+          {showXAxis &&  
+            <g className="xAxis" ref={c => (this.xAxis = c)}/>}
+          {showYAxis && 
+            <g className="yAxis" ref={c => (this.yAxis = c)}/>}
           {xGrid &&  
             <g className="xGrid" ref={c => (this.xGrid = c)}/>}
           {yGrid &&
@@ -235,7 +235,6 @@ class ChartFaC extends React.Component {
               stroke,
               w,
               h,
-              mouseCoordinates,
             })}
           </g>
         </svg>
@@ -259,6 +258,8 @@ ChartFaC.propTypes = {
   stroke: T.string,
   yAxis: T.string,
   xAxis: T.string,
+  showXAxis: T.bool,
+  showYAxis: T.bool,
   xTicks: T.number,
   yTicks: T.number,
   xGrid: T.bool,
@@ -273,6 +274,8 @@ ChartFaC.defaultProps = {
   stroke: '#0C105E',
   xAxis: 'linear',
   yAxis: 'linear',
+  showXAxis: true,
+  showYAxis: true,
   xTicks: 5,
   yTicks: 5,
   xGrid: true,
