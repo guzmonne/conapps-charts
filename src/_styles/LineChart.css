@@ -1,0 +1,16 @@
+.LineChart .LineChart__bar {
+  cursor: crosshair;
+}
+
+.LineChart .LineChart__tooltip {
+  position: absolute;
+  text-align: center;
+  padding: 0.4em;
+  font: 0.8em sans-serif;
+  background: black;
+  color: white;
+  border: 0px;
+  border-radius: 0.5em;
+  pointer-events: none;
+  z-index: 9999;
+}

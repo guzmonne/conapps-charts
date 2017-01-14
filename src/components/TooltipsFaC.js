@@ -13,6 +13,7 @@ class TooltipFaC extends React.Component {
     this.setState({
       top: offsetY - 10,
       left: offsetX + 10,
+      opacity: 1,      
       data: data,
       active: true,
     })
@@ -22,6 +23,7 @@ class TooltipFaC extends React.Component {
     this.setState({
       top: 0,
       left: 0,
+      opacity: 0,
       data: undefined,
       active: false,
     })

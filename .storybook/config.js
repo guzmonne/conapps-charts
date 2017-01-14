@@ -6,8 +6,8 @@ function loadStories() {
 }
 
 setOptions({
-  name: 'CUSTOM-OPTIONS',
-  url: 'https://github.com/kadirahq/storybook-addon-options',
+  name: 'Conapps Charts',
+  url: 'https://github.com/guzmonne/conapps-charts',
   goFullScreen: false,
   showLeftPanel: true,
   showDownPanel: true,
