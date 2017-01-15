@@ -64,7 +64,7 @@ class BarChartStory extends React.Component {
           ID: chance.guid(),
           Timestamp: moment()
                     .hour(chance.hour())
-                    .subtract(chance.d30(), 'days')
+                    .subtract(chance.d100(), 'days')
                     .valueOf(),
           Provider: chance.pickone(['facebook', 'google', 'local']),
           Gender: chance.pickone(['male', 'female']),
@@ -109,7 +109,7 @@ class BarChartStory extends React.Component {
                   xTicks={number('X Ticks', xTicks)}
                   yTicks={number('Y Ticks', yTicks)}
                   stroke={color('Stroke', stroke)}
-                  fill={color('Fill', fill)}
+                  fill={color('Fill', 'transparent')}
                   xGrid={boolean('X Grid', true)}
                   yGrid={boolean('Y Grid', true)}
                   tooltips={boolean('Tooltips', true)}

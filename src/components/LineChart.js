@@ -69,7 +69,6 @@ LineChart.propTypes = {
   }),
   fill: T.string,
   stroke: T.string,
-  pointFill: T.string,
   tooltips: T.bool,
 }
 

@@ -3,9 +3,9 @@ import Chance from 'chance'
 import moment from 'moment'
 import _ from 'lodash'
 import Lazy from 'lazy.js'
-import {text, boolean, number, object, color} from '@kadira/storybook-addon-knobs'
+import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
 
-import LineChart from '../components/LineChart.js'
+import LineChart from '../components/LineChart2.js'
 
 const chance = new Chance()
 
@@ -54,8 +54,13 @@ class LineChartStory extends React.Component {
     this.randomPoints = this.randomPoints.bind(this)
     //--
     this.state = {
+      margin: {top: 30, right: 15, bottom: 40, left: 30},
       width: 600,
       height: 400,
+      fill: '#5B5F97',
+      stroke: '#0C105E',
+      xAxis: 'time',
+      yAxis: 'linear',
       xTicks: 10,
       yTicks: 10,
       data: [],
@@ -78,13 +83,13 @@ class LineChartStory extends React.Component {
           Tags: _.range(chance.d4()).map(x => chance.word())
         })
       }
-      const numberOfPoints = chance.d10() * 30
+      const numberOfPoints = chance.d10() * 1000
       let data = []
       for (let i = 0; i < numberOfPoints; i++){
         const ap = chance.pickone(AP)
         const date = moment()
                     .hour(chance.hour())
-                    .subtract(chance.d30(), 'days')
+                    .subtract(chance.d100(), 'days')
         data.push({
           ID: chance.guid(),
           Timestamp: date.valueOf(),
@@ -129,9 +134,17 @@ class LineChartStory extends React.Component {
       xTicks,
       yTicks,
       stroke,
+      xAxis,
+      yAxis,
       fill,
       ...rest
     } = this.state
+
+    const options = {
+      linear: 'linear',
+      time: 'time',
+      scale: 'scale',
+    };
 
     return (
       <div className="LineChartStory">
@@ -150,6 +163,8 @@ class LineChartStory extends React.Component {
                    fill={color('Fill', fill)}
                    xGrid={boolean('X Grid', true)}
                    yGrid={boolean('Y Grid', true)}
+                   xAxis={select('X Axis', options, xAxis)}
+                   yAxis={select('Y Axis', options, yAxis)}
                    tooltips={boolean('Tooltips', true)}
                    {...rest}
         />

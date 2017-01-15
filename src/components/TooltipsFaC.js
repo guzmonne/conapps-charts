@@ -8,7 +8,7 @@ class TooltipFaC extends React.Component {
     active: false,
   }
 
-  tooltipShow = (data) => (e) => {
+  tooltipShow = (e, data) => {
     const {nativeEvent: {offsetX, offsetY}} = e
     this.setState({
       top: offsetY - 10,

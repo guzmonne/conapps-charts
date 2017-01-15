@@ -2,6 +2,8 @@ import '../_styles/Chart.css'
 
 import React, {PropTypes as T} from 'react'
 import uniqueId from 'lodash/uniqueId'
+import isDate from 'lodash/isDate'
+
 const d3 = Object.assign({},
   require('d3-selection'),
   require('d3-scale'),
@@ -44,17 +46,17 @@ class ChartFaC extends React.Component {
   }
 
   componentDidMount() {
-    const id = "resize." + this.container.attr('id')
+    const id = "resize." + this.id
     d3.select(window)
       .on(id, this.forceUpdate.bind(this))
   }
   
   componentWillUnmount() {
-    const id = "resize." + this.container.attr('id')
+    const id = "resize." + this.id
     d3.select(window)
       .on(id, null)
   }
-
+/*
   componentWillReceiveProps(props) {
     if (
       props.xTicks !== this.props.xTicks ||
@@ -63,9 +65,9 @@ class ChartFaC extends React.Component {
       this.d3Update()
     }
   }
-  
+*/
   componentDidUpdate() {
-    this.d3Update()
+    //this.d3Update()
   }
 
   d3Update = () => {
@@ -134,10 +136,11 @@ class ChartFaC extends React.Component {
                   .paddingInner(0.2)
         break
       case 'time': 
-        scale = d3.scaleTime().domain([
-          new Date(this.min(data, d => d[index])),
-          new Date(this.max(data, d => d[index]))
-        ])
+        scale = d3.scaleTime()
+                  .domain([
+                    isDate(this.props.min) && this.props.min.toString() !== 'Invalid Date' ? this.props.min : new Date(this.min(data, d => d[index])),
+                    isDate(this.props.max) && this.props.max.toString() !== 'Invalid Date' ? this.props.max : new Date(this.max(data, d => d[index]))
+                  ])
         break
       case 'linear': 
       default:
@@ -167,15 +170,6 @@ class ChartFaC extends React.Component {
     return height - margin.top - margin.bottom
   }
   
-  targetWidth = () => {
-    if (!this.container) return 0
-    return parseInt(this.container.style('width'))
-  }
-  
-  aspectHeight = (aspect) => {
-    return Math.round(this.targetWidth() / aspect)
-  }
-
   mouseCoordinates = (e) => {
     const {nativeEvent: {offsetX, offsetY}} = e
     return [offsetX, offsetY]
@@ -183,18 +177,8 @@ class ChartFaC extends React.Component {
   
   render() {
     const {
-      margin,
       width,
       height,
-      stroke,
-      fill,
-      data,
-      showXAxis,
-      showYAxis,
-      xGrid,
-      yGrid,
-      className,
-      tooltip,
       children,
     } = this.props
     
@@ -206,40 +190,13 @@ class ChartFaC extends React.Component {
     const w = this.innerWidth()
     const h = this.innerHeight()
     
-    const aspect = width / height
+    return children({
+      xScale,
+      yScale,
+      w,
+      h,
+    })
     
-    return (
-      <div className={className}
-           id={this.id}
-           ref={c => (this.container = d3.select(c))}>
-        {tooltip ? tooltip : <none/>}
-        <svg width={this.targetWidth() || width || 0} 
-             height={this.aspectHeight(aspect) || height || 0}
-             viewBox={`0 0 ${width || 0} ${height || 0}`}
-             ref={c => (this.svg = c)}
-             preserveAspectRatio="xMinYMid">
-          <g transform={`translate(${margin.left}, ${margin.top})`}>
-          {showXAxis &&  
-            <g className="xAxis" ref={c => (this.xAxis = c)}/>}
-          {showYAxis && 
-            <g className="yAxis" ref={c => (this.yAxis = c)}/>}
-          {xGrid &&  
-            <g className="xGrid" ref={c => (this.xGrid = c)}/>}
-          {yGrid &&
-            <g className="yGrid" ref={c => (this.yGrid = c)}/>}
-            {children({
-              data,
-              xScale,
-              yScale,
-              fill,
-              stroke,
-              w,
-              h,
-            })}
-          </g>
-        </svg>
-      </div>
-    )
   }
 }
 
@@ -269,7 +226,7 @@ ChartFaC.propTypes = {
 }
 
 ChartFaC.defaultProps = {
-  margin: {top: 30, right: 15, bottom: 80, left: 30},
+  margin: {top: 30, right: 15, bottom: 40, left: 30},
   fill: '#5B5F97',
   stroke: '#0C105E',
   xAxis: 'linear',
@@ -284,3 +241,41 @@ ChartFaC.defaultProps = {
 }
 
 export default ChartFaC
+
+
+/*
+
+return (
+  <div className={className}
+        id={this.id}
+        ref={c => (this.container = d3.select(c))}>
+    {tooltip ? tooltip : <none/>}
+    <svg width={this.targetWidth() || width || 0} 
+          height={this.aspectHeight(aspect) || height || 0}
+          viewBox={`0 0 ${width || 0} ${height || 0}`}
+          ref={c => (this.svg = c)}
+          preserveAspectRatio="xMinYMid">
+      <g transform={`translate(${margin.left}, ${margin.top})`}>
+      {showXAxis &&  
+        <g className="xAxis" ref={c => (this.xAxis = c)}/>}
+      {showYAxis && 
+        <g className="yAxis" ref={c => (this.yAxis = c)}/>}
+      {xGrid &&  
+        <g className="xGrid" ref={c => (this.xGrid = c)}/>}
+      {yGrid &&
+        <g className="yGrid" ref={c => (this.yGrid = c)}/>}
+        {children({
+          data,
+          xScale,
+          yScale,
+          fill,
+          stroke,
+          w,
+          h,
+        })}
+      </g>
+    </svg>
+  </div>
+)
+
+*/
