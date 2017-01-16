@@ -20,8 +20,6 @@ class Path extends React.Component {
   }
 
   render() {
-    console.log('render')
-
     const {data, xScale, yScale, fill, stroke, getContext, className} = this.props
 
     return (
