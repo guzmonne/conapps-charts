@@ -2,7 +2,7 @@ import React from 'react'
 import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
 import moment from 'moment'
 import {BLUE, DARK_BLUE} from './variables.js'
-import LineChart from '../components/LineChart2.js'
+import LineChart from '../components/LineChart.js'
 import LineChartTooltip from './LineChartTooltip.js'
 
 class LineChartStory extends React.Component {

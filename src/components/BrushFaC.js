@@ -21,7 +21,6 @@ class BrushFaC extends React.Component {
           )
   
   mountBrush = () => {
-    console.log(this.context, this.props.scale)
     d3.select(this.context)
       .call(this.brush.on('brush', this.brushed))
       .call(this.brush.move, this.props.scale.range())
@@ -45,10 +44,6 @@ class BrushFaC extends React.Component {
   render() {
     const {children} = this.props
     return children({
-      brush: this.brush,
-      mountBrush: this.mountBrush,
-      unmountBrush: this.unmountBrush,
-      brushed: this.brushed,
       setBrushContext: this.setBrushContext,
     })
   }
