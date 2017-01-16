@@ -44,7 +44,8 @@ class BarChart extends React.Component {
               <YGrid width={w} scale={yScale}/>
             {data.map((d, i) => (
               <rect key={`bar.${i}`} x={xScale(d[0])} y={yScale(d[1])} width={xScale.bandwidth()} height={h - yScale(d[1])}
-                    fill={fill} stroke={stroke}/>
+                    fill={fill} stroke={stroke} onMouseEnter={e => tooltipShow(e, d)} 
+                    onMouseLeave={e => tooltipHide(e, d)} onMouseMove={e => tooltipShow(e, d)}/>
             ))}
             </ChartSVG>
         </div>

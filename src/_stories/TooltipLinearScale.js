@@ -1,8 +1,8 @@
-import './_styles/LineChartTooltip.css'
+import './_styles/Tooltip.css'
 
 import React, {PropTypes as T} from 'react'
 
-const LineChartTimeLinearTooltip = ({active, top, left, data, className}) => {
+const TooltipLinearScale = ({active, top, left, data, className}) => {
   if (!active) return <none />
 
   return (
@@ -15,7 +15,7 @@ const LineChartTimeLinearTooltip = ({active, top, left, data, className}) => {
   )
 }
 
-LineChartTimeLinearTooltip.propTypes = {
+TooltipLinearScale.propTypes = {
   active: T.bool,
   top: T.number,
   left: T.number,
@@ -23,8 +23,8 @@ LineChartTimeLinearTooltip.propTypes = {
   className: T.string,
 }
 
-LineChartTimeLinearTooltip.defaultProps = {
-  className: 'LineChart__tooltip',
+TooltipLinearScale.defaultProps = {
+  className: 'Tooltip',
 }
 
-export default LineChartTimeLinearTooltip
+export default TooltipLinearScale

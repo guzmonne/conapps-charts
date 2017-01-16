@@ -3,7 +3,7 @@ import uniqBy from 'lodash/uniqBy'
 import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
 import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
-import LineChartTooltip from './LineChartLinearScaleTooltip.js'
+import TooltipTimeScale from './TooltipTimeScale.js'
 
 class LineChartTimeScaleStory extends React.Component {
   state = {
@@ -84,7 +84,7 @@ class LineChartTimeScaleStory extends React.Component {
                    xAxis={select('X Axis', options, xAxis)}
                    yAxis={select('Y Axis', options, yAxis)}
                    brush={boolean('Brush', true)}
-                   tooltip={<LineChartTooltip />}
+                   tooltip={<TooltipTimeScale />}
                    curve={boolean('Curve', true)}
                    curveAlpha={number('Curve Alpha', 0.5, {min: 0, max: 1, step: 0.1, range: true})}
                    {...rest}

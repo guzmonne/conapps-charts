@@ -4,6 +4,7 @@ import Chance from 'chance'
 
 import {BLUE, DARK_BLUE} from './variables.js'
 
+import TooltipLinearScale from './TooltipLinearScale.js'
 import BarChart from '../components/BarChart.js'
 
 const chance = new Chance()
@@ -91,6 +92,7 @@ class BarChartStory extends React.Component {
                    yAxis={select('Y Axis', options, yAxis)}
                    paddingInner={number('Padding Inner', 0.1, numberOptions)}
                    paddingOuter={number('Padding Outer', 0.1, numberOptions)}
+                   tooltip={<TooltipLinearScale />}
                    {...rest}
         />
       </div>

@@ -1,4 +1,4 @@
-import './_styles/LineChartTooltip.css'
+import './_styles/Tooltip.css'
 
 import React, {PropTypes as T} from 'react'
 
@@ -11,7 +11,7 @@ const format = (date) => (
   `${year(date)}/${month(date)}/${day(date)}`
 )
 
-const LineChartTimeScaleTooltip = ({active, top, left, data, className}) => {
+const TooltipTimeScale = ({active, top, left, data, className}) => {
   if (!active) return <none />
 
   return (
@@ -24,7 +24,7 @@ const LineChartTimeScaleTooltip = ({active, top, left, data, className}) => {
   )
 }
 
-LineChartTimeScaleTooltip.propTypes = {
+TooltipTimeScale.propTypes = {
   active: T.bool,
   top: T.number,
   left: T.number,
@@ -32,8 +32,8 @@ LineChartTimeScaleTooltip.propTypes = {
   className: T.string,
 }
 
-LineChartTimeScaleTooltip.defaultProps = {
-  className: 'LineChart__tooltip',
+TooltipTimeScale.defaultProps = {
+  className: 'Tooltip',
 }
 
-export default LineChartTimeScaleTooltip
+export default TooltipTimeScale

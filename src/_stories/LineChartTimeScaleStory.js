@@ -3,11 +3,12 @@ import {text, boolean, number, object, color, select} from '@kadira/storybook-ad
 import moment from 'moment'
 import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
-import LineChartTooltip from './LineChartTimeScaleTooltip.js'
+import TooltipLinearScale from './TooltipLinearScale.js'
 
 const d3 = Object.assign({},
   require('d3-time-format')
 )
+
 // https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js
 // SAMPLE https://jsfiddle.net/ningunaparte/9gm68vmn/
 //
@@ -114,7 +115,7 @@ class LineChartTimeScaleStory extends React.Component {
                    xAxis={select('X Axis', options, xAxis)}
                    yAxis={select('Y Axis', options, yAxis)}
                    brush={boolean('Brush', true)}
-                   tooltip={<LineChartTooltip />}
+                   tooltip={<TooltipLinearScale />}
                    curve={boolean('Curve', true)}
                    curveAlpha={number('Curve Alpha', 0.5, {min: 0, max: 1, step: 0.1, range: true})}
                    {...rest}
