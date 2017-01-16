@@ -9,7 +9,7 @@ const format = (date) => (
   `${year(date)}/${month(date)}/${day(date)}`
 )
 
-const LineChartTooltip = ({active, top, left, data, className}) => {
+const LineChartTimeScaleTooltip = ({active, top, left, data, className}) => {
   if (!active) return <none />
 
   return (
@@ -22,7 +22,7 @@ const LineChartTooltip = ({active, top, left, data, className}) => {
   )
 }
 
-LineChartTooltip.propTypes = {
+LineChartTimeScaleTooltip.propTypes = {
   active: T.bool,
   top: T.number,
   left: T.number,
@@ -30,8 +30,8 @@ LineChartTooltip.propTypes = {
   className: T.string,
 }
 
-LineChartTooltip.defaultProps = {
+LineChartTimeScaleTooltip.defaultProps = {
   className: 'LineChart__tooltip',
 }
 
-export default LineChartTooltip
+export default LineChartTimeScaleTooltip

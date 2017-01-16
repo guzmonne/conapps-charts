@@ -3,6 +3,8 @@ import '../_styles/Chart.css'
 import React, {PropTypes as T} from 'react'
 import uniqueId from 'lodash/uniqueId'
 import isDate from 'lodash/isDate'
+import isNumber from 'lodash/isNumber'
+import isNaN from 'lodash/isNaN'
 
 const d3 = Object.assign({},
   require('d3-selection'),
@@ -56,52 +58,7 @@ class ChartFaC extends React.Component {
     d3.select(window)
       .on(id, null)
   }
-/*
-  componentWillReceiveProps(props) {
-    if (
-      props.xTicks !== this.props.xTicks ||
-      props.yTicks !== this.props.yTicks      
-    ) {
-      this.d3Update()
-    }
-  }
-*/
-  componentDidUpdate() {
-    //this.d3Update()
-  }
 
-  d3Update = () => {
-    const {xTicks, yTicks} = this.props
-    const {xScale, yScale} = this.getScales()
-    const {xAxis, yAxis, xGrid, yGrid} = this
-    d3.select(xAxis)
-      .attr('transform', `translate(0, ${this.innerHeight()})`)
-      .call(
-        d3.axisBottom(xScale)
-          .ticks(xTicks)
-      )
-    d3.select(yAxis)
-      .call(
-        d3.axisLeft(yScale)
-          .ticks(yTicks)
-      )
-    d3.select(xGrid)
-      .attr('transform', `translate(0, ${this.innerHeight()})`)
-      .call(
-        d3.axisBottom(xScale)
-          .ticks(5)
-          .tickSize(-this.innerHeight())
-          .tickFormat('')
-      )
-    d3.select(yGrid)
-      .call(
-        d3.axisLeft(yScale)
-          .ticks(5)
-          .tickSize(-this.innerWidth())          
-          .tickFormat('')
-      )
-  }
-  
   getScales = () => {
     const {props: {data, xAxis, yAxis}, yScale, xScale} = this
     return  {
@@ -128,6 +85,7 @@ class ChartFaC extends React.Component {
   
   getScale = (type, data, index=0) => {
     let scale
+    const {min, max} = this.props
     switch(type) {
       case 'band':
         scale = d3.scaleBand()
@@ -138,18 +96,32 @@ class ChartFaC extends React.Component {
       case 'time': 
         scale = d3.scaleTime()
                   .domain([
-                    isDate(this.props.min) && this.props.min.toString() !== 'Invalid Date' ? this.props.min : new Date(this.min(data, d => d[index])),
-                    isDate(this.props.max) && this.props.max.toString() !== 'Invalid Date' ? this.props.max : new Date(this.max(data, d => d[index]))
+                    this.brushForIndex(index) && isDate(min) && min.toString() !== 'Invalid Date' 
+                      ? min 
+                      : new Date(this.min(data, d => d[index])),
+                    this.brushForIndex(index) && isDate(max) && max.toString() !== 'Invalid Date' 
+                      ? max 
+                      : new Date(this.max(data, d => d[index]))
                   ])
         break
       case 'linear': 
       default:
-        scale = d3.scaleLinear().domain([
-          0,
-          d3.max(data, d => d[index])
-        ])
+        scale = d3.scaleLinear()
+                  .domain([
+                    this.brushForIndex(index) && !isNaN(min) && isNumber(min)
+                      ? min 
+                      : this.min(data, d => d[index]),
+                    this.brushForIndex(index) && !isNaN(max) && isNumber(max) 
+                      ? max 
+                      : this.max(data, d => d[index])
+                  ])
     }
     return scale
+  }
+
+  brushForIndex = (index) => {
+    const {XBrush, YBrush} = this.props
+    return (XBrush && index === 0) || (YBrush && index === 1)
   }
   
   min = (data=[], getter) => {
@@ -223,6 +195,8 @@ ChartFaC.propTypes = {
   yGrid: T.bool,
   tooltip: T.element,
   className: T.string,
+  XBrush: T.bool,
+  YBrush: T.bool,
 }
 
 ChartFaC.defaultProps = {
@@ -237,6 +211,8 @@ ChartFaC.defaultProps = {
   yTicks: 5,
   xGrid: true,
   yGrid: true,
+  XBrush: true,
+  YBrush: false,
   className: 'ChartContainer',
 }
 

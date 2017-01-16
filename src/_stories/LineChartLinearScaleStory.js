@@ -1,18 +1,17 @@
 import React from 'react'
 import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
-import moment from 'moment'
 import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
-import LineChartTooltip from './LineChartTooltip.js'
+import LineChartTooltip from './LineChartLinearScaleTooltip.js'
 
-class LineChartStory extends React.Component {
+class LineChartTimeScaleStory extends React.Component {
   state = {
     margin: {top: 30, right: 15, bottom: 40, left: 30},
     width: 600,
     height: 400,
     fill: BLUE,
     stroke: DARK_BLUE,
-    xAxis: 'time',
+    xAxis: 'linear',
     yAxis: 'linear',
     xTicks: 10,
     yTicks: 10,
@@ -25,23 +24,18 @@ class LineChartStory extends React.Component {
   
   randomPoints = () => {
     let data = []
-    const MAX_DAYS = 1
-    const MAX_COUNT = 300
+    const POINTS = 200
+    const MAX_X = 1500
+    const MAX_Y = 300
 
-    for (let i = 0; i <= MAX_DAYS; i++){
-      for (let j = 0; j < 24; j++){
-        data.push([
-          moment()
-          .subtract(MAX_DAYS - i, 'days')
-          .hour(j)
-          .minutes(0)
-          .seconds(0)
-          .milliseconds(0)
-          .toDate(),
-          Math.floor(Math.random() * MAX_COUNT)
-        ])
-      }
+    for (let i = 0; i <= POINTS; i++){
+      data.push([
+        Math.floor(Math.random() * MAX_X),
+        Math.floor(Math.random() * MAX_Y)
+      ])  
     }
+
+    data = data.sort((a, b) => a[0] > b[0] ? -1 : a[0] < b[0] ? 1 : 0)
 
     this.setState({data})
   }
@@ -68,8 +62,8 @@ class LineChartStory extends React.Component {
     };
 
     return (
-      <div className="LineChartStory">
-        <div className="LineChartStory__toolbar">
+      <div className="LineChartTimeScaleStory">
+        <div className="LineChartTimeScaleStory__toolbar">
           <button onClick={this.randomPoints}>Randomize!</button>
           {' '}
           <label>Visualizing {data.length} random records</label>   
@@ -95,4 +89,4 @@ class LineChartStory extends React.Component {
   }
 }
 
-export default LineChartStory
+export default LineChartTimeScaleStory

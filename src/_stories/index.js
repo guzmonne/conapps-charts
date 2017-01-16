@@ -1,13 +1,24 @@
 import React from 'react';
 import { storiesOf, action, linkTo } from '@kadira/storybook';
 import { withKnobs } from '@kadira/storybook-addon-knobs'
-import LineChartStory from './LineChartStory.js';
+import LineChartTimeScaleStory from './LineChartTimeScaleStory.js';
+import LineChartLinearScaleStory from './LineChartLinearScaleStory.js';
 
-const stories = storiesOf('Storybook Knobs', module)
+const lineChartStories = storiesOf('LineChart', module)
 
-stories.addDecorator(withKnobs)
+lineChartStories.addDecorator(withKnobs)
 
-stories
-  .add('LineChart', () => (
-    <LineChartStory />
+lineChartStories
+  .add('LineChart with linear scale', () => (
+    <LineChartLinearScaleStory />
+  ))
+  .add('LineChart with time scale', () => (
+    <LineChartTimeScaleStory />
+  ))
+
+const barChartStories = storiesOf('BarChart', module)
+
+barChartStories
+  .add('BarChart with bandScale', () => (
+    <button type="button">Hello, World!</button>
   ))
