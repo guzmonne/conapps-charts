@@ -38,7 +38,7 @@ class LineChart extends React.Component {
     const {min, max} = this.state
     const {data} = this.props
     if (!min || !max || min.toString() === 'Invalid Date' || max.toString() === 'Invalid Date') return data
-    return data.filter(([d]) => d > min && d < max)
+    return data.filter(([d]) => d >= min && d <= max)
   }
 
   render() {
