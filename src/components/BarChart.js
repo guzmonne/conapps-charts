@@ -4,7 +4,7 @@ const d3 = Object.assign({},
 )
 
 import React, {PropTypes as T} from 'react'
-import {BLUE} from './variables.js'
+import {DARK_BLUE, BLUE} from './variables.js'
 import ChartFaC from './ChartFaC.js'
 import ChartSVG from './ChartSVG.js'
 import XAxis from './XAxis.js'
@@ -14,28 +14,6 @@ import YGrid from './YGrid.js'
 import TooltipFaC from './TooltipsFaC.js'
 
 class BarChart extends React.Component {
-  state = {
-    min: undefined,
-    max: undefined,
-  }
-
-  componentWillReceiveProps({brush}) {
-    if (brush === false) {
-      this.setState({min: undefined, max: undefined})
-    }
-  }
-
-  brushed = ([min, max]) => {
-    this.setState({min, max})
-  }
-  
-  activeData = () => {
-    const {min, max} = this.state
-    const {data} = this.props
-    if (!min || !max || min.toString() === 'Invalid Date' || max.toString() === 'Invalid Date') return data
-    return data.filter(([d]) => d >= min && d <= max)
-  }
-
   render() {
     const {
       data,
@@ -64,6 +42,10 @@ class BarChart extends React.Component {
               <YAxis scale={yScale} ticks={yTicks}/>
               <XGrid height={h} scale={xScale}/>
               <YGrid width={w} scale={yScale}/>
+            {data.map((d, i) => (
+              <rect key={`bar.${i}`} x={xScale(d[0])} y={yScale(d[1])} width={xScale.bandwidth()} height={h - yScale(d[1])}
+                    fill={fill} stroke={stroke}/>
+            ))}
             </ChartSVG>
         </div>
         )}</TooltipFaC>
@@ -83,19 +65,30 @@ BarChart.propTypes = {
     bottom: T.number,
     left: T.number,
   }),
-  fill: T.string,
-  stroke: T.string,
   xTicks: T.number,
   yTicks: T.number,
+  stroke: T.string,
+  fill: T.string,
+  xAxis: T.string,
+  yAxis: T.string,
+  xGrid: T.bool,
+  yGrid: T.bool,
   tooltip: T.element,
 }
 
 BarChart.defaultProps = {
   data: [],
+  width: 600,
+  height: 400,
   margin: {top: 30, right: 15, bottom: 20, left: 30},
-  tooltips: true,
-  stroke: BLUE,
-  fill: 'transparent',
+  xTicks: 5,
+  yTicks: 5,
+  stroke: DARK_BLUE,
+  fill: BLUE,
+  xAxis: 'linear',
+  yAxis: 'linear',
+  xGrid: true,
+  yGrid: true,
 }
 
 export default BarChart

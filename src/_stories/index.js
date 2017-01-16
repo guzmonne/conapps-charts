@@ -21,6 +21,8 @@ lineChartStories
 
 const barChartStories = storiesOf('BarChart', module)
 
+barChartStories.addDecorator(withKnobs)
+
 barChartStories
   .add('BarChart with band scale', () => (
     <BarChartStory />
