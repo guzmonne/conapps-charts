@@ -88,6 +88,8 @@ class LineChartTimeScaleStory extends React.Component {
                    yAxis={select('Y Axis', options, yAxis)}
                    brush={boolean('Brush', true)}
                    tooltip={<LineChartTooltip />}
+                   curve={boolean('Curve', true)}
+                   curveAlpha={number('Curve Alpha', 0.5, {min: 0, max: 1, step: 0.1, range: true})}
                    {...rest}
         />
       </div>

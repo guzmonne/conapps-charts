@@ -1,4 +1,5 @@
 import React from 'react'
+import uniqBy from 'lodash/uniqBy'
 import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
 import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
@@ -36,6 +37,8 @@ class LineChartTimeScaleStory extends React.Component {
     }
 
     data = data.sort((a, b) => a[0] > b[0] ? -1 : a[0] < b[0] ? 1 : 0)
+
+    data = uniqBy(data, d => d[0])
 
     this.setState({data})
   }
@@ -82,6 +85,8 @@ class LineChartTimeScaleStory extends React.Component {
                    yAxis={select('Y Axis', options, yAxis)}
                    brush={boolean('Brush', true)}
                    tooltip={<LineChartTooltip />}
+                   curve={boolean('Curve', true)}
+                   curveAlpha={number('Curve Alpha', 0.5, {min: 0, max: 1, step: 0.1, range: true})}
                    {...rest}
         />
       </div>

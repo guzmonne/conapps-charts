@@ -53,6 +53,8 @@ class LineChart extends React.Component {
       yTicks,
       tooltip,
       brush,
+      curve,
+      curveAlpha,
     } = this.props
     return (
       <div className="LineChart">
@@ -67,7 +69,8 @@ class LineChart extends React.Component {
               <YAxis scale={yScale} ticks={yTicks}/>
               <XGrid height={h} scale={xScale}/>
               <YGrid width={w} scale={yScale}/>
-              <Path fill={fill} stroke={stroke} data={this.activeData()} xScale={xScale} yScale={yScale}/>
+              <Path fill={fill} stroke={stroke} data={this.activeData()} xScale={xScale} yScale={yScale}
+                    curve={curve} curveAlpha={curveAlpha}/>
               <Circles data={this.activeData()} xScale={xScale} yScale={yScale} fill={fill}/>
               <Circles data={this.activeData()} xScale={xScale} yScale={yScale} fill={'transparent'} 
                       radius={10} onMouseEnter={tooltipShow} onMouseLeave={tooltipHide}/>
@@ -86,7 +89,7 @@ class LineChart extends React.Component {
             <XGrid height={h} scale={xScale}/>
             <YGrid width={w} scale={yScale}/>
             <Path fill={fill} stroke={stroke} data={data} xScale={xScale} yScale={yScale}
-                  getContext={setBrushContext}/>
+                  getContext={setBrushContext} curve={curve} curveAlpha={curveAlpha}/>
           </ChartSVG>
         </div>
         )}</BrushFaC>
@@ -112,6 +115,8 @@ LineChart.propTypes = {
   yTicks: T.number,
   tooltip: T.element,
   brush: T.bool,
+  curve: T.bool,
+  curveAlpha: T.number,
 }
 
 LineChart.defaultProps = {

@@ -8,12 +8,20 @@ const d3 = Object.assign({},
 
 class Path extends React.Component {
 
-  line = d3.line()
-           .x(d => this.props.xScale(d[0]))
-           .y(d => this.props.yScale(d[1]))
-           .curve(d3.curveCatmullRom.alpha(0.5))
- 
+  line = (data) => {
+    let line = d3.line()
+                 .x(d => this.props.xScale(d[0]))
+                 .y(d => this.props.yScale(d[1]))
+
+    if (this.props.curve === true)
+      line = line.curve(d3.curveCatmullRom.alpha(this.props.curveAlpha))
+  
+    return line(data)
+  }
+
   render() {
+    console.log('render')
+
     const {data, xScale, yScale, fill, stroke, getContext, className} = this.props
 
     return (
@@ -35,12 +43,16 @@ Path.propTypes = {
   brush: T.func, // D3 Brush
   brushed: T.func,
   getContext: T.func,
+  curve: T.bool,
+  curveAlpha: T.number,
 }
 
 Path.defaultProps = {
   className: 'Path',
   fill: 'transparent',
   stroke: '#5B5F97',
+  curve: true,
+  curveAlpha: 0.5,
 }
 
 export default Path
