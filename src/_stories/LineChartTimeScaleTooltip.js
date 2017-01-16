@@ -1,3 +1,5 @@
+import './_styles/LineChartTooltip.css'
+
 import React, {PropTypes as T} from 'react'
 
 const addZero = (string) => (('0' + string).slice(-2))

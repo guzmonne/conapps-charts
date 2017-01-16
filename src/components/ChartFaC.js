@@ -10,34 +10,9 @@ const d3 = Object.assign({},
   require('d3-selection'),
   require('d3-scale'),
   require('d3-array'),
-  require('d3-axis'),
-  require('d3-time-format')
+  require('d3-axis')
 )
-// https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js
-// SAMPLE https://jsfiddle.net/ningunaparte/9gm68vmn/
 
-var nowDate = new Date();
-
-// ES LOCATION
-// d3.locale Spanish Spain / Español
-// https://github.com/mbostock/d3/wiki/Localization
-
-var es_ES = {
-    "decimal": ",",
-    "thousands": ".",
-    "grouping": [3],
-    "currency": ["€", ""],
-    "dateTime": "%a %b %e %X %Y",
-    "date": "%d/%m/%Y",
-    "time": "%H:%M:%S",
-    "periods": ["AM", "PM"],
-    "days": ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-    "shortDays": ["Dom", "Lun", "Mar", "Mi", "Jue", "Vie", "Sab"],
-    "months": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-    "shortMonths": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-};
-
-var ES = d3.timeFormatDefaultLocale(es_ES);
 /**
  * @component Chart
  * @description Main chart component
@@ -85,13 +60,13 @@ class ChartFaC extends React.Component {
   
   getScale = (type, data, index=0) => {
     let scale
-    const {min, max} = this.props
+    const {min, max, paddingOuter, paddingInner} = this.props
     switch(type) {
       case 'band':
         scale = d3.scaleBand()
                   .domain(data.map(d => d[index]))
-                  .paddingOuter(0.1)
-                  .paddingInner(0.2)
+                  .paddingOuter(paddingOuter)
+                  .paddingInner(paddingInner)
         break
       case 'time': 
         scale = d3.scaleTime()
@@ -140,11 +115,6 @@ class ChartFaC extends React.Component {
   innerHeight = () => {
     const {height, margin} = this.props
     return height - margin.top - margin.bottom
-  }
-  
-  mouseCoordinates = (e) => {
-    const {nativeEvent: {offsetX, offsetY}} = e
-    return [offsetX, offsetY]
   }
   
   render() {
@@ -197,6 +167,8 @@ ChartFaC.propTypes = {
   className: T.string,
   XBrush: T.bool,
   YBrush: T.bool,
+  paddingInner: T.number,
+  paddingOuter: T.number,
 }
 
 ChartFaC.defaultProps = {
@@ -214,44 +186,8 @@ ChartFaC.defaultProps = {
   XBrush: true,
   YBrush: false,
   className: 'ChartContainer',
+  paddingOuter: 0.1,
+  paddingInner: 0.2,
 }
 
 export default ChartFaC
-
-
-/*
-
-return (
-  <div className={className}
-        id={this.id}
-        ref={c => (this.container = d3.select(c))}>
-    {tooltip ? tooltip : <none/>}
-    <svg width={this.targetWidth() || width || 0} 
-          height={this.aspectHeight(aspect) || height || 0}
-          viewBox={`0 0 ${width || 0} ${height || 0}`}
-          ref={c => (this.svg = c)}
-          preserveAspectRatio="xMinYMid">
-      <g transform={`translate(${margin.left}, ${margin.top})`}>
-      {showXAxis &&  
-        <g className="xAxis" ref={c => (this.xAxis = c)}/>}
-      {showYAxis && 
-        <g className="yAxis" ref={c => (this.yAxis = c)}/>}
-      {xGrid &&  
-        <g className="xGrid" ref={c => (this.xGrid = c)}/>}
-      {yGrid &&
-        <g className="yGrid" ref={c => (this.yGrid = c)}/>}
-        {children({
-          data,
-          xScale,
-          yScale,
-          fill,
-          stroke,
-          w,
-          h,
-        })}
-      </g>
-    </svg>
-  </div>
-)
-
-*/

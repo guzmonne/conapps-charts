@@ -1,3 +1,5 @@
+import './_styles/LineChartTooltip.css'
+
 import React, {PropTypes as T} from 'react'
 
 const LineChartTimeLinearTooltip = ({active, top, left, data, className}) => {

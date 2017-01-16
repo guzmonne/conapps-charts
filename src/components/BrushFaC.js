@@ -32,6 +32,7 @@ class BrushFaC extends React.Component {
   }
 
   brushed = (d, i, [g]) => {
+    if (!this.props.scale || !this.props.scale.invert) return
     const result = d3.brushSelection(g).map(this.props.scale.invert)
     return this.props.brushed(result)
   }

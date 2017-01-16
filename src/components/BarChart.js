@@ -4,19 +4,16 @@ const d3 = Object.assign({},
 )
 
 import React, {PropTypes as T} from 'react'
-import {DARK_BLUE, BLUE} from './variables.js'
+import {BLUE} from './variables.js'
 import ChartFaC from './ChartFaC.js'
 import ChartSVG from './ChartSVG.js'
 import XAxis from './XAxis.js'
 import YAxis from './YAxis.js'
 import XGrid from './XGrid.js'
 import YGrid from './YGrid.js'
-import Path from './Path.js'
-import Circles from './Circles.js'
 import TooltipFaC from './TooltipsFaC.js'
-import BrushFaC from './BrushFaC.js'
 
-class LineChart extends React.Component {
+class BarChart extends React.Component {
   state = {
     min: undefined,
     max: undefined,
@@ -55,10 +52,10 @@ class LineChart extends React.Component {
       curveAlpha,
     } = this.props
     return (
-      <div className="LineChart">
+      <div className="BarChart">
         <ChartFaC {...this.state} {...this.props}>{({xScale, yScale, w,h,}) => (
         <TooltipFaC>{({tooltipShow, tooltipHide, tooltipState}) => (
-        <div className="LineChart__container">
+        <div className="BarChart__container">
             {tooltip && React.cloneElement(tooltip, tooltipState)}
             <ChartSVG width={width}
                       height={height}
@@ -67,37 +64,16 @@ class LineChart extends React.Component {
               <YAxis scale={yScale} ticks={yTicks}/>
               <XGrid height={h} scale={xScale}/>
               <YGrid width={w} scale={yScale}/>
-              <Path fill={fill} stroke={stroke} data={this.activeData()} xScale={xScale} yScale={yScale}
-                    curve={curve} curveAlpha={curveAlpha}/>
-              <Circles data={this.activeData()} xScale={xScale} yScale={yScale} fill={fill}/>
-              <Circles data={this.activeData()} xScale={xScale} yScale={yScale} fill={'transparent'} 
-                      radius={10} onMouseEnter={tooltipShow} onMouseLeave={tooltipHide}/>
             </ChartSVG>
         </div>
         )}</TooltipFaC>
         )}</ChartFaC>
-      {brush &&
-        <ChartFaC {...Object.assign({}, this.props, {height: 100})}>{({xScale, yScale, w, h}) => (
-        <BrushFaC width={width} margin={margin} scale={xScale} brushed={this.brushed}>{({setBrushContext}) => (
-        <div className="LineChart__container" ref={c => this.context = c}>
-          <ChartSVG width={width}
-                    height={100}
-                    margin={margin}>
-            <XAxis height={h} scale={xScale} ticks={xTicks}/>
-            <XGrid height={h} scale={xScale}/>
-            <YGrid width={w} scale={yScale}/>
-            <Path fill={fill} stroke={stroke} data={data} xScale={xScale} yScale={yScale}
-                  getContext={setBrushContext} curve={curve} curveAlpha={curveAlpha}/>
-          </ChartSVG>
-        </div>
-        )}</BrushFaC>
-        )}</ChartFaC>}
       </div>
     )
   }
 }
 
-LineChart.propTypes = {
+BarChart.propTypes = {
   data: T.arrayOf(T.array).isRequired,
   width: T.number.isRequired,
   height: T.number.isRequired,
@@ -107,36 +83,19 @@ LineChart.propTypes = {
     bottom: T.number,
     left: T.number,
   }),
+  fill: T.string,
+  stroke: T.string,
   xTicks: T.number,
   yTicks: T.number,
-  stroke: T.string,
-  fill: T.string,
-  xAxis: T.string,
-  yAxis: T.string,
-  xGrid: T.bool,
-  yGrid: T.bool,
-  brush: T.bool,
-  curve: T.bool,
-  curveAlpha: T.number,
   tooltip: T.element,
 }
 
-LineChart.defaultProps = {
+BarChart.defaultProps = {
   data: [],
-  width: 600,
-  height: 400,
   margin: {top: 30, right: 15, bottom: 20, left: 30},
-  xTicks: 5,
-  yTicks: 5,
-  stroke: DARK_BLUE,
-  fill: BLUE,
-  xAxis: 'linear',
-  yAxis: 'linear',
-  xGrid: true,
-  yGrid: true,
-  brush: false,
-  curve: true,
-  curveAlpha: 0.5,
+  tooltips: true,
+  stroke: BLUE,
+  fill: 'transparent',
 }
 
-export default LineChart
+export default BarChart
