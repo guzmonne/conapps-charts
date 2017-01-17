@@ -56,8 +56,6 @@ class HistogramFaC extends React.Component {
 
     const bins = histogram(data)
 
-    console.log(bins.reduce((a, b) => a + b.length, 0))
-
     yScale.domain([0, d3.max(bins, d => d.length)])
 
     return children({

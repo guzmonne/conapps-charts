@@ -12,7 +12,7 @@ const d3 = Object.assign({},
   require('d3-random')
 )
 
-class HistogramLinearScaleStory extends React.Component {
+class BarHistogramLinearScaleStory extends React.Component {
   constructor(){
     super()
     //--
@@ -77,8 +77,8 @@ class HistogramLinearScaleStory extends React.Component {
     const numberOptions = {min: 0, max: 1, step: 0.1, range: true}
 
     return (
-      <div className="HistogramLinearScaleStory">
-        <div className="HistogramLinearScaleStory__toolbar">
+      <div className="BarHistogramLinearScaleStory">
+        <div className="BarHistogramLinearScaleStory__toolbar">
           <button onClick={this.randomPoints}>Randomize!</button>
           {' '}
           <label>Visualizing {data.length} random records</label>   
@@ -104,4 +104,4 @@ class HistogramLinearScaleStory extends React.Component {
   }
 }
 
-export default HistogramLinearScaleStory
+export default BarHistogramLinearScaleStory

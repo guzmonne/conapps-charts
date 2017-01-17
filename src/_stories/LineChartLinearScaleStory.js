@@ -5,6 +5,10 @@ import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
 import TooltipLinearScale from './components/TooltipLinearScale.js'
 
+const d3 = Object.assign({},
+  require('d3-random'),
+)
+
 class LineChartLinearScaleStory extends React.Component {
   state = {
     margin: {top: 30, right: 15, bottom: 40, left: 30},
@@ -22,23 +26,20 @@ class LineChartLinearScaleStory extends React.Component {
   componentDidMount() {
     this.randomPoints()
   }
+
+  randomLogNormal = d3.randomNormal(0, 0.2)
   
   randomPoints = () => {
     let data = []
     const POINTS = 200
-    const MAX_X = 1500
-    const MAX_Y = 300
+    const MAX = 100
 
     for (let i = 0; i <= POINTS; i++){
       data.push([
-        Math.floor(Math.random() * MAX_X),
-        Math.floor(Math.random() * MAX_Y)
+        i,
+        Math.round(Math.abs(this.randomLogNormal() * MAX))
       ])  
     }
-
-    data = data.sort((a, b) => a[0] > b[0] ? -1 : a[0] < b[0] ? 1 : 0)
-
-    data = uniqBy(data, d => d[0])
 
     this.setState({data})
   }

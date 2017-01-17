@@ -20,12 +20,22 @@ class Path extends React.Component {
   }
 
   render() {
-    const {data, xScale, yScale, fill, stroke, getContext, className} = this.props
+    const {
+      data,
+      xScale,
+      yScale,
+      fill,
+      stroke,
+      strokeWidth,
+      getContext,
+      className
+    } = this.props
 
     return (
       <g className={className} ref={c => getContext ? getContext(c, xScale) : null}>
         <path fill="transparent"
               stroke={stroke}
+              strokeWidth={strokeWidth}
               d={this.line(data)}/>
       </g>
     )
@@ -38,6 +48,7 @@ Path.propTypes = {
   xScale: T.func.isRequired, // D3 Scale function
   yScale: T.func.isRequired, // D3 Scale function
   stroke: T.string,
+  strokeWidth: T.number,
   brush: T.func, // D3 Brush
   brushed: T.func,
   getContext: T.func,
@@ -49,6 +60,7 @@ Path.defaultProps = {
   className: 'Path',
   fill: 'transparent',
   stroke: '#5B5F97',
+  strokeWidth: 1,
   curve: true,
   curveAlpha: 0.5,
 }

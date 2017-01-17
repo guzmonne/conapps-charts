@@ -85,7 +85,7 @@ class LineChart extends React.Component {
         )}</ChartFaC>
       {brush &&
         <ChartFaC {...Object.assign({}, this.props, {height: 100})}>{({xScale, yScale, w, h}) => (
-        <BrushFaC width={width} margin={margin} scale={xScale} brushed={this.brushed}>{({setBrushContext}) => (
+        <BrushFaC width={width} height={100} margin={margin} scale={xScale} brushed={this.brushed}>{({setBrushContext}) => (
         <div className="LineChart__container" ref={c => this.context = c}>
           <ChartSVG width={width}
                     height={100}

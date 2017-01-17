@@ -12,7 +12,7 @@ const d3 = Object.assign({},
   require('d3-random')
 )
 
-class HistogramTimeScaleStory extends React.Component {
+class BarHistogramTimeScaleStory extends React.Component {
   constructor(){
     super()
     //--
@@ -36,13 +36,25 @@ class HistogramTimeScaleStory extends React.Component {
     this.randomPoints()
   }
   
-  randomPoints() {
-    const randomX = (x) => Math.floor(Math.random() * x)
+  randomLogNormal = d3.randomIrwinHall(24)
 
-    const data = d3.range(1000).map(() => [
-      new Date(2016, 11, randomX(31), randomX(1), randomX(60)), 
-      1
-    ])
+  randomPoints = () => {
+    let data = []
+    const MAX_DAYS = 3
+    const POINTS = 5000
+
+    for (let i = 0; i <= POINTS; i++){
+      data.push([
+        moment()
+        .subtract(Math.random() * MAX_DAYS, 'days')
+        .hour(this.randomLogNormal() * 1.5)
+        .minutes(Math.random() * 60)
+        .seconds(Math.random() * 60)
+        .milliseconds(Math.random() * 1000)
+        .toDate(),
+        1
+      ])
+    }
 
     this.setState({data})
   }
@@ -82,24 +94,26 @@ class HistogramTimeScaleStory extends React.Component {
           <label>Visualizing {data.length} random records</label>   
         </div>
         <Histogram data={data}
-                    margin={object('Margin', {top: 30, right: 15, bottom: 80, left: 40})}
-                    width={number('Width', width)}
-                    height={number('Height', height)}
-                    xTicks={number('X Ticks', xTicks)}
-                    yTicks={number('Y Ticks', yTicks)}
-                    stroke={color('Stroke', stroke)}
-                    fill={color('Fill', fill)}
-                    xGrid={boolean('X Grid', false)}
-                    yGrid={boolean('Y Grid', false)}
-                    xAxis={select('X Axis', options, xAxis)}
-                    yAxis={select('Y Axis', options, yAxis)}
-                    thresholds={select('Thresholds', intervals, 'timeDay')}
-                    tooltip={<HistogramTimeScaleTooltip />}
-                    {...rest}
+                   margin={object('Margin', {top: 30, right: 15, bottom: 80, left: 40})}
+                   width={number('Width', width)}
+                   height={number('Height', height)}
+                   xTicks={number('X Ticks', xTicks)}
+                   yTicks={number('Y Ticks', yTicks)}
+                   padding={number('Padding', 0.4, numberOptions)}
+                   stroke={color('Stroke', stroke)}
+                   fill={color('Fill', fill)}
+                   xGrid={boolean('X Grid', false)}
+                   yGrid={boolean('Y Grid', false)}
+                   xAxis={select('X Axis', options, xAxis)}
+                   yAxis={select('Y Axis', options, yAxis)}
+                   thresholds={select('Thresholds', intervals, 'timeDay')}
+                   tooltip={<HistogramTimeScaleTooltip />}
+                   brush={boolean('Brush', false)}
+                   {...rest}
         />
       </div>
     )
   }
 }
 
-export default HistogramTimeScaleStory
+export default BarHistogramTimeScaleStory

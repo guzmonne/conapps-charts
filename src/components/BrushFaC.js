@@ -17,7 +17,7 @@ class BrushFaC extends React.Component {
   brush = d3.brushX()
           .extent([
             [0, 0],
-            [this.props.width, 100 - this.props.margin.bottom - this.props.margin.top]]
+            [this.props.width, this.props.height - this.props.margin.bottom - this.props.margin.top]]
           )
   
   mountBrush = () => {
