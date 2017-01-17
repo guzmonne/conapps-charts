@@ -89,6 +89,7 @@ class BarHistogramLinearScaleStory extends React.Component {
                     height={number('Height', height)}
                     xTicks={number('X Ticks', xTicks)}
                     yTicks={number('Y Ticks', yTicks)}
+                    padding={number('Padding', 0.4, numberOptions)}
                     stroke={color('Stroke', stroke)}
                     fill={color('Fill', fill)}
                     xGrid={boolean('X Grid', false)}
