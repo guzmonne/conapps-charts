@@ -3,9 +3,9 @@ import uniqBy from 'lodash/uniqBy'
 import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
 import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
-import TooltipTimeScale from './TooltipTimeScale.js'
+import TooltipLinearScale from './TooltipLinearScale.js'
 
-class LineChartTimeScaleStory extends React.Component {
+class LineChartLinearScaleStory extends React.Component {
   state = {
     margin: {top: 30, right: 15, bottom: 40, left: 30},
     width: 600,
@@ -60,13 +60,13 @@ class LineChartTimeScaleStory extends React.Component {
 
     const options = {
       linear: 'linear',
-      time: 'time',
+      time: 'Time',
       scale: 'scale',
     };
 
     return (
-      <div className="LineChartTimeScaleStory">
-        <div className="LineChartTimeScaleStory__toolbar">
+      <div className="LineChartLinearScaleStory">
+        <div className="LineChartLinearScaleStory__toolbar">
           <button onClick={this.randomPoints}>Randomize!</button>
           {' '}
           <label>Visualizing {data.length} random records</label>   
@@ -84,7 +84,7 @@ class LineChartTimeScaleStory extends React.Component {
                    xAxis={select('X Axis', options, xAxis)}
                    yAxis={select('Y Axis', options, yAxis)}
                    brush={boolean('Brush', true)}
-                   tooltip={<TooltipTimeScale />}
+                   tooltip={<TooltipLinearScale />}
                    curve={boolean('Curve', true)}
                    curveAlpha={number('Curve Alpha', 0.5, {min: 0, max: 1, step: 0.1, range: true})}
                    {...rest}
@@ -94,4 +94,4 @@ class LineChartTimeScaleStory extends React.Component {
   }
 }
 
-export default LineChartTimeScaleStory
+export default LineChartLinearScaleStory
