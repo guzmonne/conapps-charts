@@ -63,7 +63,7 @@ class LineChart extends React.Component {
     } = this.props
     return (
       <div className="LineChart">
-        <ChartFaC {...this.props}>{({xScale, yScale, w,h,}) => (
+        <ChartFaC {...this.state} {...this.props}>{({xScale, yScale, w,h,}) => (
         <TooltipFaC>{({tooltipShow, tooltipHide, tooltipState}) => (
         <div className="LineChart__container">
             {tooltip && React.cloneElement(tooltip, tooltipState)}
@@ -137,6 +137,7 @@ LineChart.defaultProps = {
   yTicks: 5,
   stroke: DARK_BLUE,
   fill: BLUE,
+  xBrush: true,
   xAxis: 'linear',
   yAxis: 'linear',
   xGrid: true,

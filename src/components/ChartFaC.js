@@ -95,8 +95,8 @@ class ChartFaC extends React.Component {
   }
 
   brushForIndex = (index) => {
-    const {XBrush, YBrush} = this.props
-    return (XBrush && index === 0) || (YBrush && index === 1)
+    const {xBrush, yBrush} = this.props
+    return (xBrush && index === 0) || (yBrush && index === 1)
   }
   
   min = (data=[], getter) => {
