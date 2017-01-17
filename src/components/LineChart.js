@@ -63,7 +63,7 @@ class LineChart extends React.Component {
     } = this.props
     return (
       <div className="LineChart">
-        <ChartFaC {...this.state} {...this.props}>{({xScale, yScale, w,h,}) => (
+        <ChartFaC {...this.props}>{({xScale, yScale, w,h,}) => (
         <TooltipFaC>{({tooltipShow, tooltipHide, tooltipState}) => (
         <div className="LineChart__container">
             {tooltip && React.cloneElement(tooltip, tooltipState)}

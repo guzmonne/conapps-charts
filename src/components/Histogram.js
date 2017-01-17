@@ -1,5 +1,4 @@
 const d3 = Object.assign({},
-  require('d3-brush'),
   require('d3-selection')
 )
 
@@ -12,8 +11,10 @@ import YAxis from './YAxis.js'
 import XGrid from './XGrid.js'
 import YGrid from './YGrid.js'
 import TooltipFaC from './TooltipsFaC.js'
+import HistogramFaC from './HistogramFaC.js'
 
-class BarChart extends React.Component {
+class Histograms extends React.Component {
+  
   render() {
     const {
       data,
@@ -24,38 +25,52 @@ class BarChart extends React.Component {
       stroke,
       xTicks,
       yTicks,
+      xAxis,
+      xGrid,
+      yGrid,
       tooltip,
-      brush,
+      thresholds,
     } = this.props
     return (
-      <div className="BarChart">
-        <ChartFaC {...this.props}>{({xScale, yScale, w,h,}) => (
+      <div className="Histograms">
+        <ChartFaC {...this.props}>{({w,h}) => (
+        <HistogramFaC data={data}
+                       xAxis={xAxis}
+                       xTicks={xTicks}
+                       width={w}
+                       height={h}
+                       thresholds={thresholds}>{({bins, xScale, yScale}) => (
         <TooltipFaC>{({tooltipShow, tooltipHide, tooltipState}) => (
-        <div className="BarChart__container">
+        <div className="Histograms__container">
             {tooltip && React.cloneElement(tooltip, tooltipState)}
             <ChartSVG width={width}
                       height={height}
                       margin={margin}>
               <XAxis height={h} scale={xScale} ticks={xTicks}/>
               <YAxis scale={yScale} ticks={yTicks}/>
-              <XGrid height={h} scale={xScale}/>
-              <YGrid width={w} scale={yScale}/>
-            {data.map((d, i) => (
-              <rect key={`bar.${i}`} x={xScale(d[0])} y={yScale(d[1])} width={xScale.bandwidth()} height={h - yScale(d[1])}
-                    fill={fill} stroke={stroke} onMouseEnter={e => tooltipShow(e, d)} 
-                    onMouseLeave={e => tooltipHide(e, d)} onMouseMove={e => tooltipShow(e, d)}/>
-            ))}
+            {xGrid &&
+              <XGrid height={h} scale={xScale}/>}
+            {yGrid && 
+              <YGrid width={w} scale={yScale}/>}
+            {bins.length > 1 && bins.map((d, i) => {
+              return <g key={`bar.${i}`} transform={`translate(${xScale(d.x0)}, ${yScale(d.length)})`}>
+                <rect fill={fill} stroke={stroke} x="1" width={xScale(d.x1) - xScale(d.x0) - 5}
+                      height={h - yScale(d.length)} onMouseEnter={e => tooltipShow(e, d)} 
+                      onMouseLeave={e => tooltipHide(e, d)} onMouseMove={e => tooltipShow(e, [d.x0, d.length, d.x1])}/>
+              </g>
+            })}
             </ChartSVG>
         </div>
         )}</TooltipFaC>
+        )}</HistogramFaC>
         )}</ChartFaC>
       </div>
     )
   }
 }
 
-BarChart.propTypes = {
-  data: T.arrayOf(T.array).isRequired,
+Histograms.propTypes = {
+  data: T.arrayOf(T.any).isRequired,
   width: T.number.isRequired,
   height: T.number.isRequired,
   margin: T.shape({
@@ -73,9 +88,10 @@ BarChart.propTypes = {
   xGrid: T.bool,
   yGrid: T.bool,
   tooltip: T.element,
+  thresholds: T.string,
 }
 
-BarChart.defaultProps = {
+Histograms.defaultProps = {
   data: [],
   width: 600,
   height: 400,
@@ -86,8 +102,8 @@ BarChart.defaultProps = {
   fill: BLUE,
   xAxis: 'linear',
   yAxis: 'linear',
-  xGrid: true,
-  yGrid: true,
+  xGrid: false,
+  yGrid: false,
 }
 
-export default BarChart
+export default Histograms

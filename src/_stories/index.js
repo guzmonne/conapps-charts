@@ -6,6 +6,8 @@ import LineChartTimeScaleStory from './LineChartTimeScaleStory.js';
 import LineChartLinearScaleStory from './LineChartLinearScaleStory.js';
 // BarChart Stories
 import BarChartStory from './BarChartStory.js'
+import HistogramTimeScaleStory from './HistogramTimeScaleStory.js'
+import HistogramLinearScaleStory from './HistogramLinearScaleStory.js'
 
 const lineChartStories = storiesOf('LineChart', module)
 
@@ -26,4 +28,10 @@ barChartStories.addDecorator(withKnobs)
 barChartStories
   .add('BarChart with band scale', () => (
     <BarChartStory />
+  ))
+  .add('Histograms with time scale', () => (
+    <HistogramTimeScaleStory />
+  ))
+  .add('Histograms with linear scale', () => (
+    <HistogramLinearScaleStory />
   ))

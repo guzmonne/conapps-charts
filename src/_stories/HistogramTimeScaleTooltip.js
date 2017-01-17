@@ -20,6 +20,8 @@ const TooltipTimeScale = ({active, top, left, data, className}) => {
           className={className}>
       <span><strong>{data && format(data[0])}</strong></span>
       <br/>
+      <span><strong>{data && format(data[2])}</strong></span>
+      <br/>
       <span>{data && data[1]}</span>
     </div>
   )
