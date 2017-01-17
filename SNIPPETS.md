@@ -51,3 +51,17 @@ svg.selectAll("dot")
         .style("opacity", 0);
       });
 ```
+
+Cool Links
+---
+
+- [Stacked-to-Grouped Bars](http://bl.ocks.org/mbostock/3943967)
+- [Universe by Crossfilter](https://github.com/crossfilter/universe)
+- [World Bank Crossfilter example](http://drarmstr.github.io/c3/examples/#worldbank/)
+- [DC.js](https://dc-js.github.io/dc.js/)
+- [Trend Chart (Area + Line)](http://bl.ocks.org/rkirsling/33a9e350516da54a5d4f)
+- [Visavail.js - A Time Data Availability Chart](https://github.com/flrs/visavail)
+- [Spotify Artist Explorer](https://artistexplorer.spotify.com/)
+- [D3js Layout Scaling](https://gist.github.com/plandem/5683951s)
+- [Longscroll.js](http://bl.ocks.org/jasondavies/3689677)
+- [Chartio](https://chartio.com/signup/)
