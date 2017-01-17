@@ -4,8 +4,8 @@ import {text, boolean, number, object, color, select} from '@kadira/storybook-ad
 
 import {BLUE, DARK_BLUE, INTERVALS} from './variables.js'
 
-import HistogramTimeScaleTooltip from './HistogramTimeScaleTooltip.js'
-import Histogram from '../components/Histogram.js'
+import HistogramTimeScaleTooltip from './components/HistogramTimeScaleTooltip.js'
+import Histogram from '../components/BarHistogram.js'
 
 const d3 = Object.assign({},
   require('d3-array'),

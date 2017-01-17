@@ -4,7 +4,7 @@ import moment from 'moment'
 import {BLUE, DARK_BLUE} from './variables.js'
 
 import LineChart from '../components/LineChart.js'
-import TooltipTimeScale from './TooltipTimeScale.js'
+import TooltipTimeScale from './components/TooltipTimeScale.js'
 
 const d3 = Object.assign({},
   require('d3-time-format')

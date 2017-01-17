@@ -4,7 +4,7 @@ import Chance from 'chance'
 
 import {BLUE, DARK_BLUE} from './variables.js'
 
-import TooltipLinearScale from './TooltipLinearScale.js'
+import TooltipLinearScale from './components/TooltipLinearScale.js'
 import BarChart from '../components/BarChart.js'
 
 const chance = new Chance()

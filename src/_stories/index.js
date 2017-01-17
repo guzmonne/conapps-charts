@@ -29,9 +29,18 @@ barChartStories
   .add('BarChart with band scale', () => (
     <BarChartStory />
   ))
-  .add('Histograms with time scale', () => (
+
+const histogramStories = storiesOf('Histogram', module)
+
+histogramStories.addDecorator(withKnobs)
+
+histogramStories
+  .add('Bar histogram with time scale', () => (
     <HistogramTimeScaleStory />
   ))
-  .add('Histograms with linear scale', () => (
+  .add('Bar histogram with linear scale', () => (
     <HistogramLinearScaleStory />
+  ))
+  .add('Line histogram with time scale', () => (
+    <button>Hello</button>
   ))

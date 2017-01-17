@@ -1,4 +1,4 @@
-import './_styles/Tooltip.css'
+import '../_styles/Tooltip.css'
 
 import React, {PropTypes as T} from 'react'
 import isDate from 'lodash/isDate'
@@ -8,8 +8,9 @@ const year = (date) => (date.getFullYear())
 const month = (date) => (addZero((date.getMonth() + 1).toString()))
 const day = (date) => (addZero((date.getDate()).toString()))
 const hour = (date) => (addZero((date.getHours()).toString()))
+const minutes = (date) => (addZero((date.getMinutes()).toString()))
 const format = (date) => (
-  `${year(date)}/${month(date)}/${day(date)}`
+  `${year(date)}/${month(date)}/${day(date)} ${hour(date)}:${minutes(date)}`
 )
 
 const TooltipTimeScale = ({active, top, left, data, className}) => {
@@ -19,8 +20,6 @@ const TooltipTimeScale = ({active, top, left, data, className}) => {
     <div style={{left, top}}
           className={className}>
       <span><strong>{data && format(data[0])}</strong></span>
-      <br/>
-      <span><strong>{data && format(data[2])}</strong></span>
       <br/>
       <span>{data && data[1]}</span>
     </div>

@@ -3,7 +3,7 @@ import uniqBy from 'lodash/uniqBy'
 import {text, boolean, number, object, color, select} from '@kadira/storybook-addon-knobs'
 import {BLUE, DARK_BLUE} from './variables.js'
 import LineChart from '../components/LineChart.js'
-import TooltipLinearScale from './TooltipLinearScale.js'
+import TooltipLinearScale from './components/TooltipLinearScale.js'
 
 class LineChartLinearScaleStory extends React.Component {
   state = {

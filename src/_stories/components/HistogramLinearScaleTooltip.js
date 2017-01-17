@@ -1,4 +1,4 @@
-import './_styles/Tooltip.css'
+import '../_styles/Tooltip.css'
 
 import React, {PropTypes as T} from 'react'
 

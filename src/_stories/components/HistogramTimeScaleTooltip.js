@@ -1,4 +1,4 @@
-import './_styles/Tooltip.css'
+import '../_styles/Tooltip.css'
 
 import React, {PropTypes as T} from 'react'
 import isDate from 'lodash/isDate'
@@ -19,6 +19,8 @@ const TooltipTimeScale = ({active, top, left, data, className}) => {
     <div style={{left, top}}
           className={className}>
       <span><strong>{data && format(data[0])}</strong></span>
+      <br/>
+      <span><strong>{data && format(data[2])}</strong></span>
       <br/>
       <span>{data && data[1]}</span>
     </div>
